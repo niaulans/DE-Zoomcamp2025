@@ -3,10 +3,12 @@ FROM python:3.9.1
 RUN apt-get install wget
 RUN pip install pandas pyarrow sqlalchemy psycopg2 
 
+RUN mkdir /app
+
 WORKDIR /app
-COPY ingest_data.py ingest_data.py
+COPY data-loading-parquet.py data-loading-parquet.py
 
 # Melewati prompt dan langsung masuk ke bash
 # ENTRYPOINT [ "bash" ] 
-ENTRYPOINT [ "python", "ingest_data.py" ]
+ENTRYPOINT [ "python", "data-loading-parquet.py" ]
 
