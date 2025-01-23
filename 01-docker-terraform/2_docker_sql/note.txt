@@ -30,6 +30,16 @@ docker run -it \
     --name pgadmin \
     dpage/pgadmin4
 
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+    --network=pg-network \
+    --name pgadmin \
+    -v /$(pwd)/pgadmin_data:/var/lib/pgadmin \
+    dpage/pgadmin4
+
+
 link = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-11.parquet"
 
 python data-loading-parquet.py \
