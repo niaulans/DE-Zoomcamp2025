@@ -1,4 +1,3 @@
-#Cleaned up version of data-loading.ipynb
 import argparse, os, sys
 from time import time
 import pandas as pd 
@@ -37,10 +36,8 @@ def main(params):
         print('Error. Only .csv or .parquet files allowed.')
         sys.exit()
 
-
     # Create the table
     df.head(0).to_sql(name=table_name, con=engine, if_exists='replace')
-
 
     # Insert values
     t_start = time()
@@ -53,18 +50,16 @@ def main(params):
         else:
             batch_df = batch
 
-        print(f'inserting batch {count}...')
+        print(f'Inserting batch {count}...')
 
         b_start = time()
         batch_df.to_sql(name=table_name, con=engine, if_exists='append')
         b_end = time()
 
-        print(f'inserted! time taken {b_end-b_start:10.3f} seconds.\n')
+        print(f'Inserted! time taken {b_end-b_start:10.3f} seconds.\n')
         
     t_end = time()   
     print(f'Completed! Total time taken was {t_end-t_start:10.3f} seconds for {count} batches.')    
-
-
 
 if __name__ == '__main__':
     #Parsing arguments 
