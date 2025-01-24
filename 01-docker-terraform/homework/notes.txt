@@ -4,3 +4,4 @@ db:5432
 2019-10-31
 East Harlem North, East Harlem South, Morningside Heights
 East Harlem South
+terraform init, terraform apply -auto-approve, terraform destroy
