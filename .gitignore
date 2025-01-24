@@ -1,6 +1,6 @@
 # .gitignore
 *.csv
-green_tripdata_2019-10.csv.gz
+*.csv.gz
 *.parquet
 .ipynb_checkpoints/
 ny_taxi_postgres_data/
