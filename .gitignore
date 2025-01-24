@@ -1,5 +1,6 @@
 # .gitignore
 *.csv
+*.csv.gz
 *.parquet
 .ipynb_checkpoints/
 ny_taxi_postgres_data/
