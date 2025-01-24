@@ -1,6 +1,6 @@
 pip 24.3.1
 db:5432
-209604;397848;219206;55356;70378
+104802;198924;109603;27678;35189
 2019-10-31
 East Harlem North, East Harlem South, Morningside Heights
 East Harlem South
