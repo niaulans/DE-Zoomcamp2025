@@ -1,0 +1,256 @@
+- Membuat jaringan docker baru dengan nama pg-network (menghubungkan kontainer-kontainer)
+docker network create pg-network
+
+- Membuat volume docker bernama dtc_postgres_volume_local, disimpan di driver local (host)
+docker volume create --name dtc_postgres_volume_local -d local
+
+-- Menjalankan kontainer baru, membuat db my_taxi, memetakan 5432 pada host ke port 5432 di kontainer. Nama kontainer pg-database, dan versi postgres 13.
+Perintah-perintah ini secara keseluruhan digunakan untuk membuat sebuah kontainer PostgreSQL versi 13 dengan konfigurasi tertentu (pengguna, kata sandi, dan nama database), dihubungkan ke jaringan Docker tertentu, dan menggunakan volume untuk penyimpanan data persisten. Kontainer ini akan berjalan pada port 5432 dan dapat diakses melalui jaringan yang sudah disiapkan.
+docker run -it \   
+-e POSTGRES_USER="root" \
+-e POSTGRES_PASSWORD="root" \
+-e POSTGRES_DB="my_taxi" \
+-v dtc_postgres_volume_local:/var/lib/postgresql/data \
+-p 5432:5432 \
+--network=pg-network \
+--name pg-database \
+postgres:13
+
+docker run -it \
+-e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+-e PGADMIN_DEFAULT_PASSWORD="root" \
+-p 8080:80 \
+--network=pg-network \
+--name pgadmin \
+dpage/pgadmin4
+
+
+docker run -it python:3.9
+docker run -it --entrypoint=bash python:3.9
+docker run -it ubuntu bash
+docker build -t test:pandas .
+docker run -it test:pandas
+
+
+services:
+    postgres:
+    image: postgres:13
+    environment:
+        POSTGRES_USER: airflow
+        POSTGRES_PASSWORD: airflow
+        POSTGRES_db: airflow
+    volumes:
+    - postgres-db-volume:/var/lib/postgresql/data
+    healthcheck:
+        test: ["CMD", "pg_isready", "-U", "airflow"]
+        interval: 5s
+        retries: 5
+    restart: always
+
+-- Menjalankan konainer postgresql:13
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_db="ny_taxi" \
+    -v ny_taxi_postgres_data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+postgres:13 
+
+pgcli -h localhost -p 5432 -U root -d postgres
+#Akses db ny_taxi
+pgcli -h localhost -p 5432 -U root -d ny_taxi
+
+docker ps --> cek container yang berjalan
+
+If you see that ny_taxi_postgres_data is empty after running the container, try these:
+Deleting the folder and running Docker again (Docker will re-create the folder)
+Adjust the permissions of the folder by running:
+sudo chmod a+rwx ny_taxi_postgres_data
+
+docker restart <container_id_or_name>
+docker ps -a
+docker stop <container_id_or_name>
+docker run -it -e POSTGRES_USER="root" -e POSTGRES_PASSWORD="root" -e POSTGRES_DB="ny_taxi" -v /$(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data -p 5432:5432 postgres:13
+docker start -i <container_id_or_name>
+
+Python:
+import pyarrow.parquet as pq
+trips = pq.read_table('trips.parquet')
+trips = trips.to_pandas()
+
+
+
+docker network create pg_network
+
+jupyter nbconvert --to=script upload-data.ipynb
+
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_db="ny_taxi" \
+    -v /$(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+postgres:13 
+
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_db="ny_taxi" \
+    -v /$(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+    --network=pg-network \
+    --name pg-database \
+postgres:13 
+
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+    dpage/pgadmin4
+
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+    --network=pg-network \
+    --name pgadmin \
+    dpage/pgadmin4
+
+link = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-11.parquet"
+
+python ingest_data.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url=${link}
+
+python ingest_data.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-11.parquet"
+
+
+docker build -t taxi_ingest:v001 .
+
+docker run -it taxi_ingest:v001 \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-11.parquet"
+
+
+Kemudian, ketika membangun image Docker, Anda dapat memilih file Dockerfile tertentu menggunakan opsi -f (atau --file):
+docker build -f Dockerfile.backend -t my-backend-image .
+docker build -f Dockerfile.frontend -t my-frontend-image .
+docker build -f Dockerfile.db -t my-db-image .
+
+docker build -f backend/Dockerfile -t backend-image ./backend
+
+docker rm $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker stop $(docker ps -q) && docker rm $(docker ps -a -q)
+
+
+sudo chown -R $USER:$USER ./ny_taxi_postgres_data
+sudo chmod -R 755 ./ny_taxi_postgres_data
+
+docker run -d -p 8888:8888 jupyter/base-notebook
+
+docker exec -it postgres-db psql -U kestra -d postgres-zoomcamp
+
+docker-compose up --build -d
+
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_db="ny_taxi" \
+    -v /$(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+postgres:13 
+
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_db="ny_taxi" \
+    -v /$(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+    --network=pg-network \
+    --name pg-database \
+postgres:13 
+
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+dpage/pgadmin4
+
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+    --network=pg-network \
+    --name pgadmin \
+    dpage/pgadmin4
+
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+    --network=pg-network \
+    --name pgadmin \
+    -v /$(pwd)/pgadmin_data:/var/lib/pgadmin \
+    dpage/pgadmin4
+
+
+link = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-11.parquet"
+
+python data-loading-parquet.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url=${link}
+
+python data-loading-parquet.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-11.parquet"
+
+docker build -t taxi_ingest:v001 .
+
+docker run -it  \
+    --network=pg-network \
+    taxi_ingest:v001 \
+        --user=root \
+        --password=root \
+        --host=pgdatabase \
+        --port=5432 \
+        --db=ny_taxi \
+        --table_name=yellow_taxi_trips \
+        --url="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-11.parquet"
+
+----------------------------------------------------------------------------------------------------------
+orchestration = the automated process of managing and coordinating the flow of data from various sources
+
+kestra: automation and orchestration platform
+- etl/etl
+- api orchestration
+- batch data pipeline
+- scheduled workflows
+
