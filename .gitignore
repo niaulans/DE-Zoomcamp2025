@@ -5,3 +5,8 @@
 .ipynb_checkpoints/
 ny_taxi_postgres_data/
 pgadmin_data/
+creds/
+*.tfstate
+*.tfstate.*
+**.terraform
+**.terraform.lock.*
