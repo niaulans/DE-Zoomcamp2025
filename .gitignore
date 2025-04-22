@@ -1,12 +1,22 @@
 # .gitignore
+
+# Files
 *.csv
 *.csv.gz
 *.parquet
+
+# Jupyter
 .ipynb_checkpoints/
+
+# Postgres & pgadmin
 ny_taxi_postgres_data/
 pgadmin_data/
-creds/
+
+# Terraform
 *.tfstate
 *.tfstate.*
 **.terraform
 **.terraform.lock.*
+
+# Credentials
+creds/
