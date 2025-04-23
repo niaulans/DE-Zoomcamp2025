@@ -17,6 +17,13 @@ pgadmin_data/
 *.tfstate.*
 **.terraform
 **.terraform.lock.*
+<<<<<<< HEAD
 
 # Credentials
 creds/
+=======
+.vscode/settings.json
+google-cloud-sdk/
+model/
+serving_dir/
+>>>>>>> a54bca8 (add model and sdk to .gitignore)
