@@ -31,7 +31,7 @@ def main(params):
     df_iter = pd.read_csv(file_name, iterator=True, chunksize=100000)
  
     # Insert values    
-     while True: 
+    while True: 
         try:
             t_start = time()
             

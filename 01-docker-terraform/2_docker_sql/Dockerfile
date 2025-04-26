@@ -7,8 +7,9 @@ RUN mkdir /app
 
 WORKDIR /app
 COPY data-loading-parquet.py data-loading-parquet.py
+COPY data-loading-csv.py data-loading-csv.py
 
 # Melewati prompt dan langsung masuk ke bash
 # ENTRYPOINT [ "bash" ] 
-ENTRYPOINT [ "python", "data-loading-parquet.py" ]
+ENTRYPOINT [ "python", "data-loading-csv.py" ]
 
