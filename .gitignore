@@ -22,10 +22,3 @@ pgadmin_data/
 
 # Credentials
 creds/*
-
-# Model
-model/
-serving_dir/
-
-
-
