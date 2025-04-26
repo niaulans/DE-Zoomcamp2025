@@ -24,7 +24,7 @@ Make docker compose can access in anywhere:
 ex: in bin/
 then export PATH="${HOME}/bin:${PATH}"
 
-export GOOGLE_APPLICATION_CREDENTIALS=creds/terraform-key.json -> to access GCP
+export GOOGLE_APPLICATION_CREDENTIALS=creds/key.json -> to access GCP
 
 PROJECT_NAME="taxi-rides-ny"
 gcloud auth application-default set-quota-project ${PROJECT_NAME}

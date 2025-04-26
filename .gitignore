@@ -5,6 +5,13 @@
 *.csv.gz
 *.parquet
 
+# Python venv
+/bin/
+/include/
+/lib/
+/lib64/
+pyvenv.cfg
+
 # Jupyter
 .ipynb_checkpoints/
 
