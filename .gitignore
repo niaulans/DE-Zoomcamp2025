@@ -27,11 +27,5 @@ creds/*
 model/
 serving_dir/
 
-# Google Cloud SDK
-google-cloud-sdk
-
-# Spark
-spark-3.5.5-bin-hadoop3/
-
 
 
