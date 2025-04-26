@@ -38,6 +38,6 @@ git push --force-with-lease origin feature-xyz
 git status
 git log --oneline
 ```
-8. Use Pull Requests (PR) or Merge Requests (MR)
+8. Use Pull Requests (PR) or Merge Requests (MR)  
 If you’re working on GitHub, GitLab, or Bitbucket, use Pull Requests (PR) or Merge Requests (MR) to merge your branch into the main branch (master or main). This allows team members to review your code before it gets merged and helps avoid large conflicts.
 
