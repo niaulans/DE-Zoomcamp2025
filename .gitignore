@@ -4,6 +4,8 @@
 *.csv
 *.csv.gz
 *.parquet
+fhvhv/
+zones/
 
 # Jupyter
 .ipynb_checkpoints/
@@ -30,6 +32,6 @@ google-cloud-sdk
 
 # Spark
 spark-3.5.5-bin-hadoop3/
-zones/
+
 
 
