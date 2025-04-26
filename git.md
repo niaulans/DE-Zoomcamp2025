@@ -40,4 +40,4 @@ git log --oneline
 ```
 8. Use Pull Requests (PR) or Merge Requests (MR)
 f you’re working on GitHub, GitLab, or Bitbucket, use Pull Requests (PR) or Merge Requests (MR) to merge your branch into the main branch (master or main). This allows team members to review your code before it gets merged and helps avoid large conflicts.
-
+10. Clean up branches
