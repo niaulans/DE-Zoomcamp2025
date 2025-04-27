@@ -6,6 +6,7 @@
 *.parquet
 fhvhv/
 zones/
+data/
 
 # Jupyter
 .ipynb_checkpoints/
