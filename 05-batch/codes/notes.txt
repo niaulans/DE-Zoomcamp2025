@@ -1,0 +1,12 @@
+python 06_spark_sql_arg.py \
+    --input_green=../datasets/data/pq/green/2020/*/ \
+    --input_yellow=../datasets/data/pq/yellow/2020/*/ \
+    --output=../datasets/data/report-2020
+
+spark-submit \
+   --master ${URL} \
+   /home/niaulansari_w/zoomcamp/DE-Zoomcamp2025/05-batch/codes/06_spark_sql_arg.py \
+   --input_green=../datasets/data/pq/green/2021/*/ \
+   --input_yellow=../datasets/data/pq/yellow/2021/*/ \
+   --output=../datasets/data/report-2021
+
