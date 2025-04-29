@@ -4,9 +4,7 @@
 *.csv
 *.csv.gz
 *.parquet
-fhvhv/
-zones/
-data/
+datasets/
 
 # Jupyter
 .ipynb_checkpoints/
