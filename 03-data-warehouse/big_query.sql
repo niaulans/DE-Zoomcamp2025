@@ -1,6 +1,5 @@
 -- Query public available table
-SELECT
-station_id, name
+SELECT station_id, name
 FROM `bigquery-public-data.new_york_citibike.citibike_stations` 
 LIMIT 100;
 
@@ -25,15 +24,15 @@ PARTITION BY DATE(tpep_pickup_datetime) AS
 SELECT * FROM `ny_taxi_zoomcamp.yellow_tripdata_external`;
 
 -- Impact of partition
--- Query scans 582.21 MB 
+-- Query scans 1.62 GB
 SELECT DISTINCT (VendorID)
 FROM `ny_taxi_zoomcamp.yellow_tripdata_external_non_partitioned`
-WHERE DATE(tpep_pickup_datetime) BETWEEN '2019-01-01' AND '2019-01-31';
+WHERE DATE(tpep_pickup_datetime) BETWEEN '2019-01-01' AND '2019-12-31';
 
--- Query scans 117 MB
+-- Query scans 1.62 GB
 SELECT DISTINCT (VendorID)
 FROM `ny_taxi_zoomcamp.yellow_tripdata_external_partitioned`
-WHERE DATE(tpep_pickup_datetime) BETWEEN '2019-01-01' AND '2019-01-31';
+WHERE DATE(tpep_pickup_datetime) BETWEEN '2019-01-01' AND '2019-12-31';
 
 -- Let's look into the partitions
 SELECT table_name, partition_id, total_rows
@@ -47,14 +46,14 @@ PARTITION BY DATE(tpep_pickup_datetime)
 CLUSTER BY VendorID AS
 SELECT * FROM `ny_taxi_zoomcamp.yellow_tripdata_external`;
 
--- Query scans 117 MB
+-- Query scans 1.62 GB
 SELECT COUNT(*) as trips
 FROM `ny_taxi_zoomcamp.yellow_tripdata_external_partitioned`
-WHERE DATE(tpep_pickup_datetime) BETWEEN '2019-01-01' AND '2019-01-31'
+WHERE DATE(tpep_pickup_datetime) BETWEEN '2019-01-01' AND '2019-12-31'
   AND VendorID=1;
 
--- Query scans 117 MB
+-- Query scans 1.62 GB
 SELECT COUNT(*) as trips
 FROM `ny_taxi_zoomcamp.yellow_tripdata_external_partitioned_clustered`
-WHERE DATE(tpep_pickup_datetime) BETWEEN '2019-01-01' AND '2019-01-31'
+WHERE DATE(tpep_pickup_datetime) BETWEEN '2019-01-01' AND '2019-12-31'
   AND VendorID=1;
