@@ -1,6 +1,6 @@
 variable "credentials" {
   description = "My GCP Credentials"
-  default     = "~/zoomcamp/DE-Zoomcamp2025/creds/gcp-key.json"
+  default     = "../../../../creds/service-key.json"
 }
 
 variable "project" {

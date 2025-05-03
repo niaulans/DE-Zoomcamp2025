@@ -10,6 +10,7 @@ terraform {
 provider "google" {
   project = "nodal-pod-448911-c5"
   region  = "asia-southeast1"
+  credentials = file("../../../../creds/service-key.json")
 }
 
 resource "google_storage_bucket" "demo-bucket" {
