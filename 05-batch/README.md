@@ -8,15 +8,17 @@ java -version
 # Download Apache Spark
 wget https://downloads.apache.org/spark/spark-3.5.5/spark-3.5.5-bin-hadoop3.tgz
 
-# Extract the downloaded file and move it to /opt
+# Extract the downloaded file in home directory
 tar xvf spark-3.5.5-bin-hadoop3.tgz && mv spark-3.5.5-bin-hadoop3 spark
-sudo mv ~/spark /opt/spark
+
+# Move the extracted folder to /opt directory
+sudo mv spark /opt/
 
 # Set environment variables
 nano ~/.bashrc
 
 # Add the following lines to the end of the file
-export SPARK_HOME=/opt/spark 
+export SPARK_HOME=/opt/spark
 export PATH=$SPARK_HOME/bin:$PATH
 
 # Save and exit the file (Ctrl + X, Y, Enter)
@@ -65,5 +67,15 @@ jupyter --version
 jupyter notebook
 ```
 
+### Connect to Google Cloud Platform
+```bash
+# Install Google Cloud SDK
+sudo apt install google-cloud-sdk -y
+
+# Authenticate with Google Cloud
+gcloud auth login
+gcloud auth application-default login
+gcloud config set project <your-project-id>
+```
 
 

@@ -1,39 +1,43 @@
 ## Running Spark in the Cloud
 
+### Important port in Spark
+| Component             | Port Default |
+| --------------------  | ------------ |
+| Spark Web UI          | 4040         |
+| Spark Master UI       | 8080         |
+| Spark Worker UI       | 8081, 8082,..|
+| Spark Master (RPC)    | 7077         |
+
 ### Connecting to Google Cloud Storage 
 
 Uploading data to GCS:
-
 ```bash
-gsutil -m cp -r pq/ gs://dtc_data_lake_de-zoomcamp-nytaxi/pq
+gsutil -m cp -r ~/projects/zoomcamp_env/DE-Zoomcamp2025/05-batch/datasets/data/pq/ gs://ny_taxi_zoomcamp/pq
 ```
 
-Download the jar for connecting to GCS to any location (e.g. the `lib` folder):
-
-**Note**: For other versions of GCS connector for Hadoop see [Cloud Storage connector ](https://cloud.google.com/dataproc/docs/concepts/connectors/cloud-storage#connector-setup-on-non-dataproc-clusters).
-
+Download the jar for connecting to GCS to any location
 ```bash
-gsutil cp gs://hadoop-lib/gcs/gcs-connector-hadoop3-2.2.5.jar ./lib/
+gsutil cp gs://hadoop-lib/gcs/gcs-connector-hadoop3-2.2.5.jar ./
 ```
-
-See the notebook with configuration in [09_spark_gcs.ipynb](09_spark_gcs.ipynb)
-
-(Thanks Alvin Do for the instructions!)
-
 
 ### Local Cluster and Spark-Submit
 
 Creating a stand-alone cluster ([docs](https://spark.apache.org/docs/latest/spark-standalone.html)):
 
 ```bash
+cd /opt/spark
 ./sbin/start-master.sh
 ```
 
+Port to access the master UI: http://localhost:8080
+
+```bash
 Creating a worker:
 
 ```bash
-URL="spark://de-zoomcamp.europe-west1-b.c.de-zoomcamp-nytaxi.internal:7077"
-./sbin/start-slave.sh ${URL}
+cd /opt/spark
+URL="spark://zoomcamp-new.asia-southeast2-a.c.nodal-pod-448911-c5.internal:7077"
+./sbin/start-worker.sh ${URL}
 
 # for newer versions of spark use that:
 #./sbin/start-worker.sh ${URL}
@@ -57,7 +61,7 @@ python 06_spark_sql.py \
 Use `spark-submit` for running the script on the cluster
 
 ```bash
-URL="spark://de-zoomcamp.europe-west1-b.c.de-zoomcamp-nytaxi.internal:7077"
+URL="spark://zoomcamp-new.asia-southeast2-a.c.nodal-pod-448911-c5.internal:7077"
 
 spark-submit \
     --master="${URL}" \
@@ -72,14 +76,14 @@ spark-submit \
 Upload the script to GCS:
 
 ```bash
-gsutil -m cp -r 06_spark_sql.py gs://dtc_data_lake_de-zoomcamp-nytaxi/code/06_spark_sql.py
+gsutil -m cp -r 06_spark_sql.py gs://ny_taxi_zoomcamp/code/06_spark_sql.py
 ```
 
 Params for the job:
 
-* `--input_green=gs://dtc_data_lake_de-zoomcamp-nytaxi/pq/green/2021/*/`
-* `--input_yellow=gs://dtc_data_lake_de-zoomcamp-nytaxi/pq/yellow/2021/*/`
-* `--output=gs://dtc_data_lake_de-zoomcamp-nytaxi/report-2021`
+* `--input_green=gs://ny_taxi_zoomcamp/pq/green/2021/*/`
+* `--input_yellow=gs://ny_taxi_zoomcamp/pq/yellow/2021/*/`
+* `--output=gs://ny_taxi_zoomcamp/report-2021`
 
 
 Using Google Cloud SDK for submitting to dataproc
@@ -89,11 +93,11 @@ Using Google Cloud SDK for submitting to dataproc
 gcloud dataproc jobs submit pyspark \
     --cluster=de-zoomcamp-cluster \
     --region=europe-west6 \
-    gs://dtc_data_lake_de-zoomcamp-nytaxi/code/06_spark_sql.py \
+    gs://ny_taxi_zoomcamp/code/06_spark_sql.py \
     -- \
-        --input_green=gs://dtc_data_lake_de-zoomcamp-nytaxi/pq/green/2020/*/ \
-        --input_yellow=gs://dtc_data_lake_de-zoomcamp-nytaxi/pq/yellow/2020/*/ \
-        --output=gs://dtc_data_lake_de-zoomcamp-nytaxi/report-2020
+        --input_green=gs://ny_taxi_zoomcamp/pq/green/2020/*/ \
+        --input_yellow=gs://ny_taxi_zoomcamp/pq/yellow/2020/*/ \
+        --output=gs://ny_taxi_zoomcamp/report-2020
 ```
 
 ### Big Query
@@ -101,7 +105,7 @@ gcloud dataproc jobs submit pyspark \
 Upload the script to GCS:
 
 ```bash
-gsutil -m cp -r 06_spark_sql_big_query.py gs://dtc_data_lake_de-zoomcamp-nytaxi/code/06_spark_sql_big_query.py
+gsutil -m cp -r 06_spark_sql_big_query.py gs://ny_taxi_zoomcamp/code/06_spark_sql_big_query.py
 ```
 
 Write results to big query ([docs](https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example#pyspark)):
@@ -111,14 +115,9 @@ gcloud dataproc jobs submit pyspark \
     --cluster=de-zoomcamp-cluster \
     --region=europe-west6 \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
-    gs://dtc_data_lake_de-zoomcamp-nytaxi/code/06_spark_sql_big_query.py \
+    gs://ny_taxi_zoomcamp/code/06_spark_sql_big_query.py \
     -- \
-        --input_green=gs://dtc_data_lake_de-zoomcamp-nytaxi/pq/green/2020/*/ \
-        --input_yellow=gs://dtc_data_lake_de-zoomcamp-nytaxi/pq/yellow/2020/*/ \
+        --input_green=gs://ny_taxi_zoomcamp/pq/green/2020/*/ \
+        --input_yellow=gs://ny_taxi_zoomcamp/pq/yellow/2020/*/ \
         --output=trips_data_all.reports-2020
 ```
-
-There can be issue with latest Spark version and the Big query connector. Download links to the jar file for respective Spark versions can be found at:
-[Spark and Big query connector](https://github.com/GoogleCloudDataproc/spark-bigquery-connector)
-
-**Note**: Dataproc on GCE 2.1+ images pre-install Spark BigQquery connector: [DataProc Release 2.2](https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-release-2.2). Therefore, no need to include the jar file in the job submission.
