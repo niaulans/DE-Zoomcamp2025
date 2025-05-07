@@ -138,4 +138,80 @@ Several materialization strategies:
 - A list of useful packages can be find in dbt package hub
 ```
 
+### Variables
+```
+- Variables are useful for defining values that should be used across the project
+- With a macro, dbt allows us to pprovide data to models for compilation
+- To use a variable we use tha {{ var('...') }} function
+- Variables can defined in two ways:
+  - In the dbt_project.yml file 
+    vars:
+    payment_type_values: [1, 2, 3, 4, 5, 6]
+  - On the command line
+    {% if var('is_test_run', default=true) %}
+
+    limit 100
+
+    {% endif %}
+```
+
+### Tests
+```
+- Assumptions that we make about our data
+- Tests in dbt are essentially a select sql query
+- These assumptions get compiled to sql that returns the amount of failing records
+- Tests are defined on a column in the .yml file
+- dbt provides basic tests to check if the column values are:
+  - unique
+  - not null
+  - accepted values
+  - a foreign key to another table
+- You can create your custom tests as queries
+```
+
+### Documentation
+```
+- dbt provides a way to generate documentation for your dbt project and render it as a website
+- The documentation for your prpject includes:
+  - Information about your project:
+    - Model code 
+    - Model dependencies
+    - Cources
+    - Auto generated DAG from the ref and source macros
+    - Descriptions and tests
+  - Information about your data warehouse 
+    - Column names and data types
+    - Tables stats like size and rows
+- dbt docs can also be hosted in dbt cloud
+
+dbt docs generate 
+```
+
+### Deployment
+```
+- Process of running the models we created in our development in a production environment
+- Development and later deployment allows us to continue, building models and testing them without affecting aour production environment
+- A deployment environment will normally have a different schema in our data warehouse and ideally a different user
+- A development - deployment workflow will be something like:
+  - Develop in a user branch
+  - Open a PR to merge into the main branch
+  - Merge the branch to the main branch
+  - Run the neew models in the production environment using the main branch
+  - Schedule the models
+```
+
+### Running a dbt project in production
+```
+- dbt cloud includes a scheduler where to create jobs to run in production
+- A single job can run multiple commands
+- Jobs can be triggered manually or on schedule
+- Each job will keep a log of the runs over time
+- Each run will also have the logs for each comman
+- A job could also generate documentation, that could be viewed under the run information
+- If dbt source freshness was run, the results can also be viewed at the end of a job
+
+
+
+
+
 
