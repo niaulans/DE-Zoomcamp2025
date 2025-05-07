@@ -5,6 +5,8 @@
 *.csv.gz
 *.parquet
 datasets/
+!seeds/
+!seeds/taxi_zone_lookup.csv
 
 # Jupyter & python
 __pycache__/
@@ -29,4 +31,4 @@ config/
 # Credentials
 creds/*
 
-!seeds/taxi_zone_lookup.csv
+
