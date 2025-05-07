@@ -209,7 +209,18 @@ dbt docs generate
 - Each run will also have the logs for each comman
 - A job could also generate documentation, that could be viewed under the run information
 - If dbt source freshness was run, the results can also be viewed at the end of a job
+```
 
+### What is Continuous Integration (CI) ?
+```
+- CI is the practice of regularly merge development branches into a central repository, after which automated builds and tests are run
+- The goal is to reduce bugs to production code and maintain a more stable project
+- dbt allows us to enable CI on pull requests
+- Enabled via webhooks from GitHub or GitLab
+- When a PR is ready to be merged, a webhooks is recevived in dbt Cloud that will enqueue a new run of the specified job
+- The run of the CI job will be againts a temporary schema
+- No PR will be able to be merged unless the run has been completed successfully
+```
 
 
 
