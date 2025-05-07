@@ -93,3 +93,49 @@ PostgreSQL:
 - Running dbt models through the CLI
 ```
 
+### Anatomy of a dbt model
+```sql
+{{
+  config(materialized='table')
+}}
+
+SELECT * 
+FROM staging.source_table
+WHERE records_state = 'ACTIVE'
+```
+
+```sql
+-- Compiled code
+CREATE TABLE my_schema.my_model AS (
+  SELECT *
+  FROM staging.source_table
+  WHERE record_state = 'ACTIVE'
+)
+```
+
+```
+Several materialization strategies:
+- Table = physical representations of data that are created and stored in the database
+- View = virtual tables created by dbt that can be required like regular tables
+- Incremental= powerful feature of dbt that allow for efficient updates to existing tables, reducing the need for full data refreshes
+- Ephemeral = temporary and exist only for the duration of a single dbt run
+```
+
+### Macros
+```
+- Use control structures (if statements and for loops) in SQL
+- Use environtment variables in your dbt project for production deployments
+- Operate on the results of one query to generate another query
+- Abstract snippets of SQL into reusable macros - these are analogous to functions in most programming languages.
+```
+
+### Packages
+```
+- Like libraries in other programming languages
+- Standalone dbt projects, with models and macros that tackle a specific problem area
+- By adding a package to your project, the package's models and acros will become part of your own prroject
+- Imported in the packages.yml file and imported by running "dbt deps"
+- A list of useful packages can be find in dbt package hub
+```
+
+
