@@ -2,8 +2,8 @@ version: 2
 
 sources:
   - name: staging
-    database: "{{ env_var('DBT_PROJECT_ID') }}"
-    schema: "{{ env_var('DBT_DATASET') }}"
+    database: "nodal-pod-448911-c5"
+    schema: "ny_taxi_zoomcamp"
       # loaded_at_field: record_loaded_at
     tables:
       - name: green_tripdata
