@@ -9,7 +9,7 @@ from confluent_kafka import Consumer
 if __name__ == "__main__":
     # Load environment variables from .env file
     load_dotenv()
-    
+
     # Parse the command line
     parser = ArgumentParser()
     parser.add_argument('config_file', type=FileType('r'))
@@ -39,10 +39,12 @@ if __name__ == "__main__":
             if msg is None:
                 print("Waiting...")
             elif msg.error():
-                print("ERROR: %s".format(msg.error()))
+                print(f"ERROR: {msg.error()}")
             else:
                 # Extract the (optional) key and value, and print.
-                print("Consumed event from topic {topic}: key = {key} value = {value}".format(topic=msg.topic(), key=msg.key(), value=msg.value()))
+                key = msg.key().decode('utf-8') if msg.key() else None
+                value = msg.value().decode('utf-8') if msg.value() else None
+                print(f"Consumed event from topic {msg.topic()}: key = {key}, value = {value}")
     except KeyboardInterrupt:
         pass
     finally:
